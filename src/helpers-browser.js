@@ -1,4 +1,4 @@
-const txt = new TextEncoder
+const txt = new TextEncoder()
 const toUtf8 = txt.encode.bind(txt)
 
 const hmac = async (bits, value, makeHex) => {

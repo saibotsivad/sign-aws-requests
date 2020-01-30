@@ -41,8 +41,7 @@ const getCanonicalQuery = query => (query || '')
 const getCanonicalHeaderValues = (headerKeys, headers) => headerKeys
 	.map(key => `${key.toLowerCase().trim()}:${formatHeaderValue(headers[key])}`)
 	.sort()
-	.join('\n')
-	+ '\n'
+	.join('\n') + '\n'
 
 const getCanonicalHeaderKeyList = headerKeys => headerKeys
 	.map(key => key.toLowerCase())
@@ -103,9 +102,7 @@ const createCanonicalRequest = async ({
 	].join('\n')
 
 	let signingKey = `AWS4${secretAccessKey}`
-	let index = 0
 	for (const value of signingValues) {
-		index++
 		signingKey = await hmac(signingKey, value)
 	}
 	const signature = await hmac(signingKey, stringToSign, true)

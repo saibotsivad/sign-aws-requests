@@ -36,9 +36,9 @@ const exampleRequest = {
 	method: 'GET',
 	url: 'https://iam.amazonaws.com/?Action=ListUsers&Version=2010-05-08',
 	headers: {
-		'Host': 'iam.amazonaws.com',
+		Host: 'iam.amazonaws.com',
 		'Content-Type': 'application/x-www-form-urlencoded; charset=utf-8',
-		'X-Amz-Date': '20150830T123600Z',
+		'X-Amz-Date': '20150830T123600Z'
 	}
 }
 

@@ -1,4 +1,4 @@
-import { exampleStringToSign, exampleCanonicalRequest, exampleConfig, exampleRequest } from '../test-helpers.js'
+import { exampleConfig, exampleRequest } from '../test-helpers.js'
 import { signAwsRequest } from './index-node.js'
 import { test } from 'zora'
 
