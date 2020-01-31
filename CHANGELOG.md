@@ -18,8 +18,21 @@ Change categories are:
 
 n/a
 
-## [1.0.0] - 2020-02-01
+---
+
+## [1.0.1] - 2020-01-31
+
+### Changed
+* Commit built dist files to github.
+
+### Fixed
+* Re-build before publishing to npm.
+
+---
+
+## [1.0.0] - 2020-01-31
 Initial release.
 
 [Unreleased]: https://github.com/saibotsivad/imap-box-names/compare/develop...HEAD
-[1.0.0]: https://github.com/saibotsivad/imap-box-names/compare/v2.0.1...v2.0.2
+[1.0.1]: https://github.com/saibotsivad/imap-box-names/compare/v1.0.0...v1.0.1
+[1.0.0]: https://github.com/saibotsivad/imap-box-names/compare/v0.0.0...v1.0.0
