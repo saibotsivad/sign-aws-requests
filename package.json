@@ -11,7 +11,7 @@
   "scripts": {
     "build": "rollup -c",
     "test": "npm run test:lint && npm run test:core:browser && npm run test:core:node && npm run test:index:browser && npm run test:index:node",
-    "test:lint": "eslint **.js",
+    "test:lint": "eslint **.js --fix",
     "test:core:browser": "rollup src/core-browser.test.js -c rollup-browser-test.config.js | tape-run | tap-exit-code",
     "test:core:node": "node -r esm src/core-node.test.js | tap-exit-code",
     "test:index:browser": "rollup src/index-browser.test.js -c rollup-browser-test.config.js | tape-run | tap-exit-code",
