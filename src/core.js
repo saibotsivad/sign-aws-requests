@@ -55,8 +55,8 @@ const getFormattedDate = date => (date || new Date())
 
 const createCanonicalRequest = async ({
 	date,
-	hmac,
 	hash,
+	hmacSignature,
 	parseUrl,
 	config,
 	request // { method, url, body, headers = {} }
@@ -101,12 +101,11 @@ const createCanonicalRequest = async ({
 		hashedCanonicalRequest
 	].join('\n')
 
-	let signingKey = `AWS4${secretAccessKey}`
-	for (const value of signingValues) {
-		signingKey = await hmac(signingKey, value)
-	}
-	const signature = await hmac(signingKey, stringToSign, true)
-	signingKey = signingKey.toString('hex')
+	const { signature, signingKey } = await hmacSignature({
+		secretAccessKey,
+		signingValues,
+		stringToSign
+	})
 
 	return {
 		canonicalRequest,

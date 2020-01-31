@@ -1,10 +1,10 @@
 import { createCanonicalRequest } from './core.js'
-import { hash, hmac, parseUrl } from './helpers-node.js'
+import { hash, parseUrl, hmacSignature } from './helpers-node.js'
 
 const signAwsRequest = ({ config }) => (request, options) => createCanonicalRequest({
 	date: options && options.date,
-	hmac,
 	hash,
+	hmacSignature,
 	parseUrl,
 	config,
 	request
