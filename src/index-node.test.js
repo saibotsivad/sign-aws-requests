@@ -1,9 +1,9 @@
 import { exampleConfig, exampleRequest } from '../test-helpers.js'
-import { signAwsRequest } from './index-node.js'
+import { createAwsSigner } from './index-node.js'
 import { test } from 'zora'
 
 test('from the AWS example', async t => {
-	const sign = signAwsRequest({
+	const sign = createAwsSigner({
 		config: exampleConfig
 	})
 	const { authorization } = await sign(exampleRequest)

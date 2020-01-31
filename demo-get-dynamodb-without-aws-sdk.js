@@ -1,8 +1,8 @@
-import { signAwsRequest } from './src/index-node.js'
+import { createAwsSigner } from './src/index-node.js'
 import got from 'got'
 import secrets from './secrets.js'
 
-const sign = signAwsRequest({
+const sign = createAwsSigner({
 	config: {
 		service: 'dynamodb',
 		region: secrets.region,
