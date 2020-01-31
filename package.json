@@ -1,6 +1,6 @@
 {
   "name": "sign-aws-requests",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Sign an AWS request with their v4 signature algorithm.",
   "module": "dist/sign-aws-requests.mjs",
   "main": "dist/sign-aws-requests.js",
