@@ -1,6 +1,7 @@
-import { createAwsSigner } from './src/index-node.js'
-import got from 'got'
-import secrets from './secrets.js'
+const got = require('got')
+
+const { createAwsSigner } = require('./src/index-node.js')
+const secrets = require('./secrets.js')
 
 const sign = createAwsSigner({
 	config: {

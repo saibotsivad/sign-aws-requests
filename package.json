@@ -16,8 +16,8 @@
     "test:core:node": "node -r esm src/core-node.test.js | tap-exit-code",
     "test:index:browser": "rollup src/index-browser.test.js -c rollup-browser-test.config.js | tape-run | tap-exit-code",
     "test:index:node": "node -r esm src/index-node.test.js | tap-exit-code",
-    "demo:aws-sdk": "node -r esm demo-get-dynamodb-with-aws-sdk.js",
-    "demo:this-module": "node -r esm demo-get-dynamodb-without-aws-sdk.js"
+    "demo:aws-sdk": "node demo-get-dynamodb-with-aws-sdk.js",
+    "demo:this-module": "node demo-get-dynamodb-without-aws-sdk.js"
   },
   "files": [
     "dist",
@@ -42,21 +42,19 @@
   },
   "homepage": "https://github.com/saibotsivad/sign-aws-requests#readme",
   "devDependencies": {
-    "@rollup/plugin-json": "^4.0.1",
+    "@rollup/plugin-commonjs": "^14.0.0",
+    "@rollup/plugin-json": "^4.1.0",
+    "@rollup/plugin-node-resolve": "^8.4.0",
     "@saibotsivad/aws-sig-v4-test-suite": "^2.0.4",
-    "aws-sdk": "^2.610.0",
-    "eslint": "^6.8.0",
+    "aws-sdk": "^2.713.0",
+    "eslint": "^7.4.0",
     "eslint-config-standard": "^14.1.0",
     "esm": "^3.2.25",
     "got": "^10.3.0",
-    "jsdom": "^16.0.1",
-    "playwright": "^0.9.24",
-    "rollup": "^1.30.1",
-    "rollup-plugin-commonjs": "^10.1.0",
-    "rollup-plugin-node-resolve": "^5.2.0",
-    "standard": "^14.3.1",
+    "rollup": "^2.21.0",
+    "standard": "^14.3.4",
     "tap-exit-code": "^2.0.0",
-    "tape-run": "^6.0.1",
+    "tape-run": "^7.0.0",
     "zora": "^3.1.8"
   }
 }

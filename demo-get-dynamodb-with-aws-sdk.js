@@ -1,5 +1,6 @@
-import secrets from './secrets.js'
 const AWS = require('aws-sdk')
+
+const secrets = require('./secrets.js')
 
 const dynamodb = new AWS.DynamoDB({
 	region: secrets.region,
