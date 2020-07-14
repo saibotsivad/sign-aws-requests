@@ -20,8 +20,10 @@
     "demo:this-module": "node -r esm demo-get-dynamodb-without-aws-sdk.js"
   },
   "files": [
-    "dist"
+    "dist",
+    "types.d.ts"
   ],
+  "types": "types.d.ts",
   "engines": {
     "node": ">= 10"
   },
