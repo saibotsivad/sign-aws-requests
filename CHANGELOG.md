@@ -14,11 +14,12 @@ Change categories are:
 * `Fixed` for any bug fixes.
 * `Security` to invite users to upgrade in case of vulnerabilities.
 
-## [Unreleased]
-
-n/a
-
 ---
+
+## [2.0.0](https://github.com/saibotsivad/sign-aws-requests/compare/v1.0.1...v2.0.0) - 2022-02-21
+### Changed
+- BREAKING CHANGE: All in on type=module now, remapped package.json fields.
+- Updated all dev dependencies
 
 ## [1.0.1] - 2020-01-31
 
@@ -33,6 +34,6 @@ n/a
 ## [1.0.0] - 2020-01-31
 Initial release.
 
-[Unreleased]: https://github.com/saibotsivad/imap-box-names/compare/develop...HEAD
-[1.0.1]: https://github.com/saibotsivad/imap-box-names/compare/v1.0.0...v1.0.1
-[1.0.0]: https://github.com/saibotsivad/imap-box-names/compare/v0.0.0...v1.0.0
+[Unreleased]: https://github.com/saibotsivad/sign-aws-requests/compare/develop...HEAD
+[1.0.1]: https://github.com/saibotsivad/sign-aws-requests/compare/v1.0.0...v1.0.1
+[1.0.0]: https://github.com/saibotsivad/sign-aws-requests/compare/v0.0.0...v1.0.0

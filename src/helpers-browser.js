@@ -6,7 +6,7 @@ const hmacToHex = buffer => Array
 	.map
 	.call(
 		new Uint8Array(buffer),
-		x => x.toString(16).padStart(2, '0')
+		x => x.toString(16).padStart(2, '0'),
 	)
 	.join('')
 

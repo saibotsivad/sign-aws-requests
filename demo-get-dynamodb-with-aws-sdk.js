@@ -1,38 +1,38 @@
 import secrets from './secrets.js'
-const AWS = require('aws-sdk')
+import AWS from 'aws-sdk'
 
 const dynamodb = new AWS.DynamoDB({
 	region: secrets.region,
 	credentials: {
 		accessKeyId: secrets.accessKeyId,
-		secretAccessKey: secrets.secretAccessKey
-	}
+		secretAccessKey: secrets.secretAccessKey,
+	},
 })
 
 const query = {
 	TableName: 'demo-sign-aws-requests',
 	Key: {
 		DemoPrimaryKey: {
-			S: 'DEMO'
+			S: 'DEMO',
 		},
 		DemoSortKey: {
-			S: '123'
-		}
-	}
+			S: '123',
+		},
+	},
 }
 
 const expected = JSON.stringify({
 	Item: {
 		Foo: {
-			S: 'bar'
+			S: 'bar',
 		},
 		DemoPrimaryKey: {
-			S: 'DEMO'
+			S: 'DEMO',
 		},
 		DemoSortKey: {
-			S: '123'
-		}
-	}
+			S: '123',
+		},
+	},
 })
 
 dynamodb.getItem(query, (error, data) => {

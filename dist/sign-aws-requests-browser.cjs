@@ -1,3 +1,7 @@
+'use strict';
+
+Object.defineProperty(exports, '__esModule', { value: true });
+
 const ALGORITHM = 'AWS4-HMAC-SHA256';
 
 // https://github.com/aws/aws-sdk-js/blob/cc29728c1c4178969ebabe3bbe6b6f3159436394/lib/signers/v4.js#L190-L198
@@ -125,7 +129,7 @@ const hmacToHex = buffer => Array
 	.map
 	.call(
 		new Uint8Array(buffer),
-		x => x.toString(16).padStart(2, '0')
+		x => x.toString(16).padStart(2, '0'),
 	)
 	.join('');
 
@@ -169,4 +173,4 @@ const createAwsSigner = ({ config }) => async (request, options) => createCanoni
 	request
 }).then(({ authorization }) => ({ authorization }));
 
-export { createAwsSigner };
+exports.createAwsSigner = createAwsSigner;

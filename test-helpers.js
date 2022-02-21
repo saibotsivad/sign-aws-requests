@@ -29,7 +29,7 @@ const exampleConfig = {
 	service: 'iam',
 	region: 'us-east-1',
 	accessKeyId: 'AKIDEXAMPLE',
-	secretAccessKey: 'wJalrXUtnFEMI/K7MDENG+bPxRfiCYEXAMPLEKEY'
+	secretAccessKey: 'wJalrXUtnFEMI/K7MDENG+bPxRfiCYEXAMPLEKEY',
 }
 
 const exampleRequest = {
@@ -38,8 +38,8 @@ const exampleRequest = {
 	headers: {
 		Host: 'iam.amazonaws.com',
 		'Content-Type': 'application/x-www-form-urlencoded; charset=utf-8',
-		'X-Amz-Date': '20150830T123600Z'
-	}
+		'X-Amz-Date': '20150830T123600Z',
+	},
 }
 
 export {
@@ -47,5 +47,5 @@ export {
 	exampleStringToSign,
 	exampleCanonicalRequest,
 	exampleConfig,
-	exampleRequest
+	exampleRequest,
 }

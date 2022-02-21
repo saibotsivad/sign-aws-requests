@@ -1,5 +1,9 @@
-import { createHmac, createHash } from 'crypto';
-import { URL } from 'url';
+'use strict';
+
+Object.defineProperty(exports, '__esModule', { value: true });
+
+var crypto = require('crypto');
+var url = require('url');
 
 const ALGORITHM = 'AWS4-HMAC-SHA256';
 
@@ -120,7 +124,7 @@ const createCanonicalRequest = async ({
 	}
 };
 
-const hmac = async (key, data, makeHex) => createHmac('sha256', key)
+const hmac = async (key, data, makeHex) => crypto.createHmac('sha256', key)
 	.update(Buffer.from(data))
 	.digest(makeHex ? 'hex' : undefined);
 
@@ -136,11 +140,11 @@ const hmacSignature = async ({ secretAccessKey, signingValues, stringToSign }) =
 	return { signature, signingKey }
 };
 
-const hash = async message => createHash('sha256')
+const hash = async message => crypto.createHash('sha256')
 	.update(message)
 	.digest('hex');
 
-const parseUrl = string => new URL(string);
+const parseUrl = string => new url.URL(string);
 
 const createAwsSigner = ({ config }) => async (request, options) => createCanonicalRequest({
 	date: options && options.date,
@@ -151,4 +155,4 @@ const createAwsSigner = ({ config }) => async (request, options) => createCanoni
 	request
 }).then(({ authorization }) => ({ authorization }));
 
-export { createAwsSigner };
+exports.createAwsSigner = createAwsSigner;
