@@ -42,8 +42,8 @@ const sign = createAwsSigner({
 	config: {
 		service: 'dynamodb',
 		region: 'us-east-1',
-		secretAccessKey: 'AKIDEXAMPLE',
-		accessKeyId: 'wJalrXUtnFEMI/K7MDENG+bPxRfiCYEXAMPLEKEY'
+		accessKeyId: 'AKIDEXAMPLE',
+		secretAccessKey: 'wJalrXUtnFEMI/K7MDENG+bPxRfiCYEXAMPLEKEY',
 	}
 });
 ```
