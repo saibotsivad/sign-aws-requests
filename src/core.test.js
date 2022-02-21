@@ -1,7 +1,7 @@
 import { createCanonicalRequest } from './core.js'
 import { formatHeaders, exampleStringToSign, exampleCanonicalRequest, exampleConfig, exampleRequest } from '../test-helpers.js'
 import { test } from 'zora'
-import suite from '@saibotsivad/aws-sig-v4-test-suite'
+import { suite } from '../built-test-suite.js'
 
 export default ({ hash, parseUrl, hmacSignature }) => {
 	test('from the AWS example', async t => {
@@ -24,13 +24,13 @@ export default ({ hash, parseUrl, hmacSignature }) => {
 			stringToSign,
 			signingKey,
 			signature,
-			authorization
+			authorization,
 		} = await createCanonicalRequest({
 			hash,
 			parseUrl,
 			hmacSignature,
 			config: exampleConfig,
-			request: exampleRequest
+			request: exampleRequest,
 		})
 		t.equal(canonicalRequest, exampleCanonicalRequest)
 		t.equal(hashedCanonicalRequest, 'f536975d06c0309214f805bb90ccff089219ecd68b2577efef23edd43b7e1a59')
@@ -58,7 +58,7 @@ export default ({ hash, parseUrl, hmacSignature }) => {
 				const {
 					canonicalRequest,
 					stringToSign,
-					authorization
+					authorization,
 				} = await createCanonicalRequest({
 					hash,
 					hmacSignature,
@@ -68,8 +68,8 @@ export default ({ hash, parseUrl, hmacSignature }) => {
 						method: aws.request.method,
 						url: `https://${host}${aws.request.uri}`,
 						headers: formatHeaders(aws.request.headers),
-						body: aws.request.body
-					}
+						body: aws.request.body,
+					},
 				})
 				t.equal(canonicalRequest, aws.creq, 'the canonical request should match')
 				t.equal(stringToSign, aws.sts, 'the string to sign should match')

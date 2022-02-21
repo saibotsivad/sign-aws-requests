@@ -7,8 +7,8 @@ const sign = createAwsSigner({
 		service: 'dynamodb',
 		region: secrets.region,
 		secretAccessKey: secrets.secretAccessKey,
-		accessKeyId: secrets.accessKeyId
-	}
+		accessKeyId: secrets.accessKeyId,
+	},
 })
 
 const request = {
@@ -17,19 +17,19 @@ const request = {
 	headers: {
 		'content-type': 'application/x-amz-json-1.0',
 		'X-Amz-Target': 'DynamoDB_20120810.GetItem',
-		Host: 'dynamodb.us-east-1.amazonaws.com'
+		Host: 'dynamodb.us-east-1.amazonaws.com',
 	},
 	body: JSON.stringify({
 		TableName: 'demo-sign-aws-requests',
 		Key: {
 			DemoPrimaryKey: {
-				S: 'DEMO'
+				S: 'DEMO',
 			},
 			DemoSortKey: {
-				S: '123'
-			}
-		}
-	})
+				S: '123',
+			},
+		},
+	}),
 }
 
 // The 'got' module lets us inject the request signing
@@ -40,23 +40,23 @@ const awsClient = got.extend({
 			async options => {
 				const { authorization } = await sign(options)
 				options.headers.Authorization = authorization
-			}
-		]
-	}
+			},
+		],
+	},
 })
 
 const expected = JSON.stringify({
 	Item: {
 		Foo: {
-			S: 'bar'
+			S: 'bar',
 		},
 		DemoPrimaryKey: {
-			S: 'DEMO'
+			S: 'DEMO',
 		},
 		DemoSortKey: {
-			S: '123'
-		}
-	}
+			S: '123',
+		},
+	},
 })
 
 awsClient(request)

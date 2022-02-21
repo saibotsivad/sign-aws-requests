@@ -2,28 +2,38 @@
   "name": "sign-aws-requests",
   "version": "1.0.1",
   "description": "Sign an AWS request with their v4 signature algorithm.",
-  "module": "dist/sign-aws-requests.mjs",
-  "main": "dist/sign-aws-requests.js",
+  "type": "module",
+  "module": "dist/sign-aws-requests.js",
+  "main": "dist/sign-aws-requests.cjs",
   "browser": {
-    "./dist/sign-aws-requests.mjs": "./dist/sign-aws-requests-browser.mjs",
-    "./dist/sign-aws-requests.js": "./dist/sign-aws-requests-browser.js"
+    "./dist/sign-aws-requests.js": "./dist/sign-aws-requests-browser.js",
+    "./dist/sign-aws-requests.cjs": "./dist/sign-aws-requests-browser.cjs"
+  },
+  "exports": {
+    ".": {
+      "import": "./dist/sign-aws-requests.js",
+      "require": "./dist/sign-aws-requests.cjs"
+    },
+    "./package.json": "./package.json"
   },
   "scripts": {
+    "prepublishOnly": "npm run build",
     "build": "rollup -c",
+    "pretest": "node export-test-suite.js",
     "test": "npm run test:lint && npm run test:core:browser && npm run test:core:node && npm run test:index:browser && npm run test:index:node",
     "test:lint": "eslint **.js --fix",
     "test:core:browser": "rollup src/core-browser.test.js -c rollup-browser-test.config.js | tape-run | tap-exit-code",
-    "test:core:node": "node -r esm src/core-node.test.js | tap-exit-code",
+    "test:core:node": "node src/core-node.test.js | tap-exit-code",
     "test:index:browser": "rollup src/index-browser.test.js -c rollup-browser-test.config.js | tape-run | tap-exit-code",
-    "test:index:node": "node -r esm src/index-node.test.js | tap-exit-code",
-    "demo:aws-sdk": "node -r esm demo-get-dynamodb-with-aws-sdk.js",
-    "demo:this-module": "node -r esm demo-get-dynamodb-without-aws-sdk.js"
+    "test:index:node": "node src/index-node.test.js | tap-exit-code",
+    "demo:aws-sdk": "node demo-get-dynamodb-with-aws-sdk.js",
+    "demo:this-module": "node demo-get-dynamodb-without-aws-sdk.js"
   },
   "files": [
     "dist"
   ],
   "engines": {
-    "node": ">= 10"
+    "node": ">= 16"
   },
   "repository": {
     "type": "git",
@@ -33,28 +43,31 @@
     "aws",
     "signature"
   ],
-  "author": "saibotsivad",
-  "license": "VOL",
+  "author": {
+    "name": "Tobias Davis",
+    "email": "tobias@davistobias.com",
+    "url": "https://davistobias.com"
+  },
+  "license": "SEE LICENSE IN LICENSE.md",
   "bugs": {
     "url": "https://github.com/saibotsivad/sign-aws-requests/issues"
   },
   "homepage": "https://github.com/saibotsivad/sign-aws-requests#readme",
   "devDependencies": {
-    "@rollup/plugin-json": "^4.0.1",
+    "@rollup/plugin-commonjs": "^21.0.1",
+    "@rollup/plugin-json": "^4.1.0",
+    "@rollup/plugin-node-resolve": "^13.1.3",
     "@saibotsivad/aws-sig-v4-test-suite": "^2.0.4",
-    "aws-sdk": "^2.610.0",
-    "eslint": "^6.8.0",
-    "eslint-config-standard": "^14.1.0",
+    "@saibotsivad/eslint-config-saibotsivad": "^0.0.4",
+    "aws-sdk": "^2.1078.0",
+    "eslint": "^8.9.0",
     "esm": "^3.2.25",
-    "got": "^10.3.0",
-    "jsdom": "^16.0.1",
-    "playwright": "^0.9.24",
-    "rollup": "^1.30.1",
-    "rollup-plugin-commonjs": "^10.1.0",
-    "rollup-plugin-node-resolve": "^5.2.0",
-    "standard": "^14.3.1",
+    "got": "^12.0.1",
+    "jsdom": "^19.0.0",
+    "playwright": "^1.19.1",
+    "rollup": "^2.67.3",
     "tap-exit-code": "^2.0.0",
-    "tape-run": "^6.0.1",
-    "zora": "^3.1.8"
+    "tape-run": "^9.0.0",
+    "zora": "^5.0.3"
   }
 }

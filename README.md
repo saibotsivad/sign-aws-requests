@@ -4,11 +4,11 @@ Sign requests to AWS with their [Version 4 Signature](https://docs.aws.amazon.co
 
 Instead of importing the enormously huge [aws-sdk](https://www.npmjs.com/package/aws-sdk) (currently 46.4MB unpacked) you could use this as the basis for some much lighter tooling.
 
-## compatibility
+## Compatibility
 
 AWS provides a [full test suite](https://docs.aws.amazon.com/general/latest/gr/signature-v4-test-suite.html) for the Version 4 Signature, and this library passes all tests except the invalid ones noted [here](https://github.com/saibotsivad/aws-sig-v4-test-suite/#notes-on-bad-tests).
 
-## install
+## Install
 
 The normal way:
 
@@ -24,14 +24,14 @@ const { createAwsSigner } = require('sign-aws-requests')
 import { createAwsSigner } from 'sign-aws-requests'
 ```
 
-This library exports a NodeJS and browser compatible version, your bundler should handle picking which one but you can select manually:
+This library exports a NodeJS and browser compatible version, your bundler should handle picking which one, but you can select manually:
 
-* Browser, ES import/export - `dist/sign-aws-requests-browser.mjs`
-* Browser, CommonJS - `dist/sign-aws-requests-browser.js`
-* NodeJS, ES import/export - `dist/sign-aws-requests.mjs`
-* NodeJS, CommonJS - `dist/sign-aws-requests.js`
+* Browser, ES import/export - `dist/sign-aws-requests-browser.js`
+* Browser, CommonJS - `dist/sign-aws-requests-browser.cjs`
+* NodeJS, ES import/export - `dist/sign-aws-requests.js`
+* NodeJS, CommonJS - `dist/sign-aws-requests.cjs`
 
-## normal use
+## Normal Use
 
 Create a signer:
 
@@ -80,9 +80,9 @@ const { authorization } = await sign(request)
 request.headers.Authorization = authorization
 ```
 
-## api
+## API
 
-### initialize `function(Object) => function`
+### `initialize: function(Object) => function`
 
 The initialize function returns a new instance configured to sign requests to a particular service. It takes an object with the following **required** options:
 
@@ -94,7 +94,7 @@ The initialize function returns a new instance configured to sign requests to a 
 
 The returned property is the function used to sign requests.
 
-### sign `function(Object) => Object`
+### `sign: function(Object) => Object`
 
 The signing function takes an HTTP request object with the following **required** properties:
 
@@ -107,7 +107,7 @@ The output of the signing function is an object containing the following propert
 
 * `authorization: String` - The value which you would place in the header.
 
-## license
+## License
 
 The test files originated from AWS, but were given with an Apache 2.0 license.
 

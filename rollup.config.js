@@ -4,31 +4,31 @@ module.exports = [
 	{
 		input: 'src/index-node.js',
 		output: {
-			file: 'dist/sign-aws-requests.js',
-			format: 'cjs'
+			file: 'dist/sign-aws-requests.cjs',
+			format: 'cjs',
 		},
-		external
+		external,
 	},
 	{
 		input: 'src/index-node.js',
 		output: {
-			file: 'dist/sign-aws-requests.mjs',
-			format: 'es'
+			file: 'dist/sign-aws-requests.js',
+			format: 'es',
 		},
-		external
+		external,
+	},
+	{
+		input: 'src/index-browser.js',
+		output: {
+			file: 'dist/sign-aws-requests-browser.cjs',
+			format: 'cjs',
+		},
 	},
 	{
 		input: 'src/index-browser.js',
 		output: {
 			file: 'dist/sign-aws-requests-browser.js',
-			format: 'cjs'
-		}
+			format: 'es',
+		},
 	},
-	{
-		input: 'src/index-browser.js',
-		output: {
-			file: 'dist/sign-aws-requests-browser.mjs',
-			format: 'es'
-		}
-	}
 ]
