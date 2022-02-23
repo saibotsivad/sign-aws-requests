@@ -53,13 +53,24 @@ const getFormattedDate = date => (date || new Date())
 	.replace(/[:-]/g, '')
 	.replace(/\.\d\d\dZ/, 'Z')
 
+const makeFormLinesFromObject = obj => Object
+	.entries(obj)
+	.filter(([ , value ]) => value !== undefined)
+	.map(([ key, value ]) => `${ key }=${ encodeURIComponent(value).replace(/%20/g, '+') }`)
+
+const stringifyBody = (body, formencode) => {
+	if (formencode) return [ ...makeFormLinesFromObject(body), 'Version=2012-11-05' ].join('&')
+	else return JSON.stringify(body)
+}
+
 const createCanonicalRequest = async ({
 	date,
 	hash,
 	hmacSignature,
 	parseUrl,
 	config,
-	request // { method, url, body, headers = {} }
+	request, // { method, url, body, headers = {} }
+	formencode,
 }) => {
 	const { service, region, secretAccessKey, accessKeyId } = config
 	const { search, pathname } = parseUrl(request.url)
@@ -75,13 +86,17 @@ const createCanonicalRequest = async ({
 
 	const canonicalHeaderKeyList = getCanonicalHeaderKeyList(signableHeaderKeys)
 
+	const bodyString = typeof request.body === 'object'
+		? stringifyBody(request.body, formencode)
+		: request.body
+
 	const canonicalRequest = [
 		request.method || (request.body ? 'POST' : 'GET'),
 		getCanonicalUri(pathname, service === 's3'),
 		getCanonicalQuery(search.replace(/^\?/, '')),
 		getCanonicalHeaderValues(signableHeaderKeys, request.headers),
 		canonicalHeaderKeyList,
-		await hash(request.body || '')
+		await hash(bodyString || ''),
 	].join('\n')
 
 	const hashedCanonicalRequest = await hash(canonicalRequest)
@@ -90,7 +105,7 @@ const createCanonicalRequest = async ({
 		dateFragment,
 		region,
 		service,
-		'aws4_request'
+		'aws4_request',
 	]
 	const credentialScope = signingValues.join('/')
 
@@ -98,13 +113,13 @@ const createCanonicalRequest = async ({
 		ALGORITHM,
 		request.headers['X-Amz-Date'],
 		credentialScope,
-		hashedCanonicalRequest
+		hashedCanonicalRequest,
 	].join('\n')
 
 	const { signature, signingKey } = await hmacSignature({
 		secretAccessKey,
 		signingValues,
-		stringToSign
+		stringToSign,
 	})
 
 	return {
@@ -113,7 +128,8 @@ const createCanonicalRequest = async ({
 		stringToSign,
 		signingKey,
 		signature,
-		authorization: `${ALGORITHM} Credential=${accessKeyId}/${credentialScope}, SignedHeaders=${canonicalHeaderKeyList}, Signature=${signature}`
+		bodyString,
+		authorization: `${ALGORITHM} Credential=${accessKeyId}/${credentialScope}, SignedHeaders=${canonicalHeaderKeyList}, Signature=${signature}`,
 	}
 }
 

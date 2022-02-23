@@ -40,6 +40,34 @@ export default ({ hash, parseUrl, hmacSignature }) => {
 		t.equal(authorization, 'AWS4-HMAC-SHA256 Credential=AKIDEXAMPLE/20150830/us-east-1/iam/aws4_request, SignedHeaders=content-type;host;x-amz-date, Signature=5d672d79c15b13162d9279b0855cfba6789a8edb4c82c400e06b5924a6f2b5d7')
 	})
 
+	test('form url encoding', async t => {
+		const {
+			canonicalRequest,
+			bodyString,
+		} = await createCanonicalRequest({
+			hash,
+			parseUrl,
+			hmacSignature,
+			config: exampleConfig,
+			request: {
+				url: 'https://sqs.us-east-1.amazonaws.com',
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/x-www-form-urlencoded',
+					'Host': 'sqs.us-east-1.amazonaws.com',
+					'X-Amz-Date': '20150830T123600Z',
+				},
+				body: {
+					Action: 'SendMessage',
+					MessageBody: '{"hello":"world"}',
+				},
+			},
+			formencode: true,
+		})
+		t.equal(bodyString, 'Action=SendMessage&MessageBody=%7B%22hello%22%3A%22world%22%7D&Version=2012-11-05')
+		t.equal(canonicalRequest, 'POST\n/\n\ncontent-type:application/x-www-form-urlencoded\nhost:sqs.us-east-1.amazonaws.com\nx-amz-date:20150830T123600Z\n\ncontent-type;host;x-amz-date\nc0ac094bd00bf6f5029de7a1b2761e85c06511437fae8c555c7f39cf384a9c6c', 'the canonical request should match')
+	})
+
 	let testRequests = suite.tests.all.reduce((map, t, index) => {
 		t.index = index
 		map[t.name] = t
