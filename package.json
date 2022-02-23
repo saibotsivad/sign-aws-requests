@@ -9,6 +9,7 @@
     "./dist/sign-aws-requests.js": "./dist/sign-aws-requests-browser.js",
     "./dist/sign-aws-requests.cjs": "./dist/sign-aws-requests-browser.cjs"
   },
+  "types": "types.d.ts",
   "exports": {
     ".": {
       "import": "./dist/sign-aws-requests.js",
@@ -30,7 +31,8 @@
     "demo:this-module": "node demo-get-dynamodb-without-aws-sdk.js"
   },
   "files": [
-    "dist"
+    "dist",
+    "types.d.ts"
   ],
   "engines": {
     "node": ">= 16"
