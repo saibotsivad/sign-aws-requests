@@ -16,7 +16,11 @@ Change categories are:
 
 ---
 
-## [2.1.0](https://github.com/saibotsivad/sign-aws-requests/compare/v1.0.1...v2.1.0) - 2022-02-23
+## [2.2.0](https://github.com/saibotsivad/sign-aws-requests/compare/v2.1.0...v2.2.0) - 2022-02-23
+### Added
+- TypeScript definitions. Hopefully I got them right...
+
+## [2.1.0](https://github.com/saibotsivad/sign-aws-requests/compare/v2.0.0...v2.1.0) - 2022-02-23
 ### Added
 - If you pass in an object as `body` on the request, it'll convert it to a string and return `bodyString` with `authorization`.
 - If you pass in `formencode: true` to the `options` and an object as `body` when signing a request, the `bodyString` will be Form URL encoded.
