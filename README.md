@@ -59,7 +59,7 @@ const request = {
 		'X-Amz-Target': 'DynamoDB_20120810.GetItem',
 		'Host': 'dynamodb.us-east-1.amazonaws.com'
 	},
-	body: JSON.stringify({
+	body: {
 		TableName: 'demo-sign-aws-requests',
 		Key: {
 			DemoPrimaryKey: {
@@ -69,16 +69,48 @@ const request = {
 				S: '123'
 			}
 		}
-	})
+	}
 };
 ```
 
 Sign that request, generating the `Authorization` header, which you then add to the request headers:
 
 ```js
-const { authorization } = await sign(request)
+const { authorization, bodyString } = await sign(request)
 request.headers.Authorization = authorization
+request.body = bodyString
 ```
+
+> Note: if you pass in `body` as a string, you won't be able to use the Form URL Encoding described below, but everything else will work fine.
+
+### Form URL Encoding
+
+Some AWS endpoints (for example the SQS API) require the body of the request to be form URL encoded.
+
+If you pass in `body` as an object and set the option `formencode` to `true`, the `bodyString` output will be correctly encoded.
+
+For example:
+
+```js
+const request = {
+	url: 'https://sqs.us-east-1.amazonaws.com',
+	method: 'POST',
+	headers: {
+		'Content-Type': 'application/x-www-form-urlencoded',
+		'Host': 'sqs.us-east-1.amazonaws.com',
+	},
+	body: {
+		Action: 'SendMessage',
+		MessageBody: '{"hello":"world"}',
+	}
+}
+const { authorization, bodyString } = await sign(request, { formencode: true })
+request.headers.Authorization = authorization
+request.body = bodyString
+console.log(bodyString) // => 'Action=SendMessage&MessageBody=%7B%22hello%22%3A%22world%22%7D&Version=2012-11-05'
+```
+
+> Note: Be sure to set the `Content-Type` header to `application/x-www-form-urlencoded` or AWS might not like your request!
 
 ## API
 
@@ -94,7 +126,7 @@ The initialize function returns a new instance configured to sign requests to a 
 
 The returned property is the function used to sign requests.
 
-### `sign: function(Object) => Object`
+### `sign: function(request: Object, options?: Object) => Object`
 
 The signing function takes an HTTP request object with the following **required** properties:
 
@@ -103,9 +135,14 @@ The signing function takes an HTTP request object with the following **required*
 * `headers: Object` - The request headers. Note that this is a normal key to string value map, but if there are multiple values for the same header key, the value must be an array of strings.
 * `body: String` *[optional]* - The string value of the body.
 
+The options object takes the following options properties:
+
+* `formencode: Boolean` - Whether to convert the `body` to the Form URL Encoded version. (Default: `false`)
+
 The output of the signing function is an object containing the following properties:
 
 * `authorization: String` - The value which you would place in the header.
+* `bodyString: String` - The original string or undefined, if those were passed in as `body`, or the stringified body. In the case of Form URL Encoded, it will be the encoded object string, and in other cases it will simply be passed through `JSON.stringify`.
 
 ## License
 
