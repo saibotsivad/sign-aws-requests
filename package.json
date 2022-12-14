@@ -12,6 +12,10 @@
   "types": "types.d.ts",
   "exports": {
     ".": {
+      "browser": {
+        "import": "./dist/sign-aws-requests-browser.js",
+        "require": "./dist/sign-aws-requests-browser.cjs"
+      },
       "import": "./dist/sign-aws-requests.js",
       "require": "./dist/sign-aws-requests.cjs"
     },
